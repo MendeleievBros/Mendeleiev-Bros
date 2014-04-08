@@ -22,7 +22,9 @@ class EscenaMenu(pilas.escena.Base):
         for elemento in self.elementos:
             # Miro si el ratón entra en colisión con el área de la bandera
             if elemento.colisiona_con_un_punto(evento.x, evento.y):
-                print elemento.nivel
+
+                import escena_juego
+                pilas.cambiar_escena(escena_juego.Juego(elemento.nivel))
 
     def iniciar(self):
         pilas.fondos.Fondo("data/guarida.jpg")
@@ -50,8 +52,7 @@ class EscenaMenu(pilas.escena.Base):
         if self.menu.x == -500:
             self.mostrar_tabla()
             return False
-            #import escena_juego
-            #pilas.cambiar_escena(escena_juego.Juego())
+
         return True
 
     def mostrar_tabla(self):
