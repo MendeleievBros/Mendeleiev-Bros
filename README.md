@@ -1,3 +1,4 @@
+![Logo](logo.png) 
 Mendeleiev-Bros
 ===============
 
