@@ -17,14 +17,20 @@ class EscenaMenu(pilas.escena.Base):
     def __init__(self):
         pilas.escena.Base.__init__(self)
 
+    def leertxt(self):
+        archi = open('datos.txt', 'r')
+        linea = archi.readline()
+        archi.close()
+        return linea
+
     def nivel(self, evento):
         #Recorro la lista de banderas para ver si le he dado
         for elemento in self.elementos:
             # Miro si el ratón entra en colisión con el área de la bandera
             if elemento.colisiona_con_un_punto(evento.x, evento.y):
-
-                import escena_juego
-                pilas.cambiar_escena(escena_juego.Juego(elemento.nivel))
+                if elemento.nivel <= int(self.nivel_guardado):
+                    import escena_juego
+                    pilas.cambiar_escena(escena_juego.Juego(elemento.nivel))
 
     def iniciar(self):
         pilas.fondos.Fondo("data/guarida.jpg")
@@ -33,6 +39,7 @@ class EscenaMenu(pilas.escena.Base):
         pilas.mundo.agregar_tarea(0.1, self.act)
         pilas.eventos.click_de_mouse.conectar(self.nivel)
         self.elementos = []
+        self.nivel_guardado = self.leertxt()
 
     def crear_el_menu_principal(self):
         opciones = [

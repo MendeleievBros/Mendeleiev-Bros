@@ -22,7 +22,22 @@ class Iniciar:
 class Iniciando(Iniciar):
     "Estado que indica que el juego ha comenzado."
     def __init__(self, nivel):
+        self.nivel = nivel
         nivel = "Nivel" + str(nivel)
+        self.texto = pilas.actores.Texto(nivel, 0, 200, magnitud=30,
+            vertical=False, fuente="data/tipo_tabla.ttf", fijo=True)
+        self.texto.color = pilas.colores.negro
+        self.texto.z = 5
+        self.texto.y = [-200]
+        self.contador_de_segundos = 0
+        # Cada un segundo le avisa al estado que cuente.
+        pilas.mundo.agregar_tarea(1, self.actualizar)
+
+
+class Ganando(Iniciar):
+    "Estado que indica que el juego ha comenzado."
+    def __init__(self, nivel):
+        nivel = "Has completado el nivel" + str(nivel)
         self.texto = pilas.actores.Texto(nivel, 0, 200, magnitud=30,
             vertical=False, fuente="data/tipo_tabla.ttf", fijo=True)
         self.texto.color = pilas.colores.negro
@@ -108,7 +123,29 @@ class Juego(pilas.escena.Base):
         self.paredes_abajo.append(pared1)
         return True
 
+    def grabartxt(self):
+        archi = open('datos.txt', 'w')
+        archi.write(str(int(self.nivel) + 1))
+
+        archi.close()
+
+    def ganar(self):
+        if self.barra1.progreso == 100:
+            self.grabartxt()
+            pilas.escena_actual().tareas.eliminar_todas()
+            self.barra.eliminar()
+            self.barra1.eliminar()
+            self.jacinto.eliminar()
+            for pared in self.paredes_abajo:
+                pared.eliminar()
+            for pared in self.paredes_arriba:
+                pared.eliminar()
+            for molecula in self.MoleculasHidrogeno:
+                molecula.eliminar()
+            self.cambiar_estado(Ganando(self.nivel))
+
     def act(self):
+        self.ganar()
         print self.barra1.progreso
         self.colision()
         self.limpiar()
@@ -137,8 +174,12 @@ class Juego(pilas.escena.Base):
         for pared in self.paredes_arriba:
             pared.x -= 1
         if pared.x == self.jacinto.x:
+
             if self.jacinto.arriba > pared.abajo:
-                self.barra1.progreso -= 10
+                if self.barra1.progreso >= 10:
+                    self.barra1.progreso -= 10
+                else:
+                    self.final()
             else:
                 self.barra1.progreso += 5
 
@@ -146,7 +187,11 @@ class Juego(pilas.escena.Base):
             pared.x -= 1
             if pared.x == self.jacinto.x:
                 if self.jacinto.abajo < pared.arriba:
-                    self.barra1.progreso -= 15
+                    if self.barra1.progreso >= 15:
+                        self.barra1.progreso -= 15
+                    else:
+                        self.barra1.progreso -= 5
+                        self.final()
 
         for pared in self.paredes_puntuadas:
             pared.x -= 1
