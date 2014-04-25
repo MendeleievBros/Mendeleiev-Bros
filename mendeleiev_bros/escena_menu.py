@@ -39,7 +39,20 @@ class EscenaMenu(pilas.escena.Base):
         pilas.mundo.agregar_tarea(0.1, self.act)
         pilas.eventos.click_de_mouse.conectar(self.nivel)
         self.elementos = []
+        self.candado = []
         self.nivel_guardado = self.leertxt()
+
+    def candados(self):
+
+        # muestra los candados de los niveles no disponibles
+        for elemento in self.elementos:
+
+            if elemento.nivel > int(self.nivel_guardado):
+                candado1 = pilas.actores.Actor("data/candado.png")
+                candado1.x = elemento.x
+                candado1.y = elemento.y
+                self.candado.append(candado1)
+        return True
 
     def crear_el_menu_principal(self):
         opciones = [
@@ -57,6 +70,7 @@ class EscenaMenu(pilas.escena.Base):
 
     def act(self):
         if self.menu.x == -500:
+
             self.mostrar_tabla()
             return False
 
@@ -91,6 +105,7 @@ class EscenaMenu(pilas.escena.Base):
         self.elementos.append(Elemento(texto="Ne", x=210, y=90, nivel=10))
         self.elementos.append(Elemento(texto="Ar", x=210, y=45, nivel=18))
         self.elementos.append(Elemento(texto="Kr", x=210, y=0, nivel=26))
+        self.candados()
 
     def mostrar_historia(self):
         import escena_historia

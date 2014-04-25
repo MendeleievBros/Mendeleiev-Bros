@@ -146,7 +146,7 @@ class Juego(pilas.escena.Base):
 
     def act(self):
         self.ganar()
-        print self.barra1.progreso
+
         self.colision()
         self.limpiar()
         if not self.SinCombustible:
