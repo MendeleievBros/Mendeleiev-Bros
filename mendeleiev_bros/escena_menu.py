@@ -57,8 +57,9 @@ class EscenaMenu(pilas.escena.Base):
     def crear_el_menu_principal(self):
         opciones = [
         ("Comenzar a jugar", self.comenzar_a_jugar),
-        ("Ver ayuda", self.mostrar_ayuda_del_juego),
+        ("Ayuda", self.mostrar_ayuda_del_juego),
         ("Historia", self.mostrar_historia),
+        ("Opciones", self.mostrar_opciones),
         ("Salir", self.salir_del_juego)
         ]
         self.trans = pilas.actores.Actor("data/trans.png")
@@ -110,6 +111,10 @@ class EscenaMenu(pilas.escena.Base):
     def mostrar_historia(self):
         import escena_historia
         pilas.cambiar_escena(escena_historia.Historia())
+
+    def mostrar_opciones(self):
+        import escena_opciones
+        pilas.cambiar_escena(escena_opciones.Opciones())
 
     def comenzar_a_jugar(self):
 

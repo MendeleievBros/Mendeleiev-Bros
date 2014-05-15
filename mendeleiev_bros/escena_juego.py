@@ -48,6 +48,18 @@ class Ganando(Iniciar):
         pilas.mundo.agregar_tarea(1, self.actualizar)
 
 
+class Jacinto(pilas.actores.Actor):
+    "Un actor que se mueve con las teclas a, s y ESPACIO y con animación"
+    def __init__(self):
+        pilas.actores.Actor.__init__(self)
+        self.imagen = pilas.imagenes.cargar_grilla("data/grilla.png", 2)
+        self.x = -200
+        self.radio_de_colision = 30
+
+    def definir_cuadro(self, indice):
+        self.imagen.definir_cuadro(indice)
+
+
 #Definimos la clase de nuestro juego
 class Juego(pilas.escena.Base):
 
@@ -64,9 +76,8 @@ class Juego(pilas.escena.Base):
         self.paredes_puntuadas = []  # paredes a la izquierda de jacinto
         self.MoleculasHidrogeno = []
         self.SinCombustible = False  # Controla el fin del combustible
-        self.jacinto = pilas.actores.Actor("data/jacinto.png")
-        self.jacinto.x = -200
-        self.jacinto.radio_de_colision = 30
+        self.jacinto = Jacinto()
+        self.jacinto.definir_cuadro(1)
         self.dy = -1  # gravedad
         self.altura_diff = 80  # max 60 min 80
         self.altura = 62 + self.altura_diff  # altura de abertura// 62(jacinto)
@@ -124,15 +135,24 @@ class Juego(pilas.escena.Base):
         return True
 
     def grabartxt(self):
+        archi = open('datos.txt', 'r')
+        nivel = archi.readline()
+        nivel_sumado = int(nivel) + 1
+        pantalla = archi.readline()
+        archi.close()
         archi = open('datos.txt', 'w')
-        archi.write(str(int(self.nivel) + 1))
+
+        archi.write(str(nivel_sumado) + "\n" + pantalla)
 
         archi.close()
+        return False
 
     def ganar(self):
-        if self.barra1.progreso == 100:
-            self.grabartxt()
+        if  self.barra1.progreso == 100:
+            self.barra1.progreso = 0
             pilas.escena_actual().tareas.eliminar_todas()
+            self.grabartxt()
+
             self.barra.eliminar()
             self.barra1.eliminar()
             self.jacinto.eliminar()
@@ -158,7 +178,10 @@ class Juego(pilas.escena.Base):
             if self.jacinto.arriba <= 250:
                 #para que no suba más de lo debido
                 if self.mandos.arriba:
+                    self.jacinto.definir_cuadro(0)
                     self.jacinto.y += 3
+                else:
+                    self.jacinto.definir_cuadro(1)
 
         self.movimiento()
 
