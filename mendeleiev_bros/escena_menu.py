@@ -11,9 +11,8 @@ class Elemento(pilas.actores.Texto):
         self.nivel = nivel
 
 
-class EscenaMenu(pilas.escena.Base):
-    "Es la escena de presentación donde se elijen las opciones del juego."
-
+class EscenaNiveles(pilas.escena.Base):
+    "Es la escena de presentación donde se elije el nivel."
     def __init__(self):
         pilas.escena.Base.__init__(self)
 
@@ -34,13 +33,11 @@ class EscenaMenu(pilas.escena.Base):
 
     def iniciar(self):
         pilas.fondos.Fondo("data/guarida.jpg")
-        pilas.avisar(u"Use el teclado para controlar el menú.")
-        self.crear_el_menu_principal()
-        pilas.mundo.agregar_tarea(0.1, self.act)
         pilas.eventos.click_de_mouse.conectar(self.nivel)
         self.elementos = []
         self.candado = []
         self.nivel_guardado = self.leertxt()
+        self.mostrar_tabla()
 
     def candados(self):
 
@@ -52,29 +49,6 @@ class EscenaMenu(pilas.escena.Base):
                 candado1.x = elemento.x
                 candado1.y = elemento.y
                 self.candado.append(candado1)
-        return True
-
-    def crear_el_menu_principal(self):
-        opciones = [
-        ("Comenzar a jugar", self.comenzar_a_jugar),
-        ("Ayuda", self.mostrar_ayuda_del_juego),
-        ("Historia", self.mostrar_historia),
-        ("Opciones", self.mostrar_opciones),
-        ("Salir", self.salir_del_juego)
-        ]
-        self.trans = pilas.actores.Actor("data/trans.png")
-        self.trans.x = -155
-        self.trans.arriba = 85
-        self.menu = pilas.actores.Menu(opciones, x=-150, y=70, color_normal=
-        pilas.colores.negro, color_resaltado=pilas.colores.rojo)
-        self.menu.x = -150
-
-    def act(self):
-        if self.menu.x == -500:
-
-            self.mostrar_tabla()
-            return False
-
         return True
 
     def mostrar_tabla(self):
@@ -107,6 +81,42 @@ class EscenaMenu(pilas.escena.Base):
         self.elementos.append(Elemento(texto="Ar", x=210, y=45, nivel=18))
         self.elementos.append(Elemento(texto="Kr", x=210, y=0, nivel=26))
         self.candados()
+
+
+class EscenaMenu(pilas.escena.Base):
+    "Es la escena de presentación donde se elijen las opciones del juego."
+
+    def __init__(self):
+        pilas.escena.Base.__init__(self)
+
+    def iniciar(self):
+        pilas.fondos.Fondo("data/guarida.jpg")
+        pilas.avisar(u"Use el teclado para controlar el menú.")
+        self.crear_el_menu_principal()
+        pilas.mundo.agregar_tarea(0.1, self.act)
+
+    def crear_el_menu_principal(self):
+        opciones = [
+        ("Comenzar a jugar", self.comenzar_a_jugar),
+        ("Ayuda", self.mostrar_ayuda_del_juego),
+        ("Historia", self.mostrar_historia),
+        ("Opciones", self.mostrar_opciones),
+        ("Salir", self.salir_del_juego)
+        ]
+        self.trans = pilas.actores.Actor("data/trans.png")
+        self.trans.x = -155
+        self.trans.arriba = 85
+        self.menu = pilas.actores.Menu(opciones, x=-150, y=70, color_normal=
+        pilas.colores.negro, color_resaltado=pilas.colores.rojo)
+        self.menu.x = -150
+
+    def act(self):
+        if self.menu.x == -500:
+
+            pilas.cambiar_escena(EscenaNiveles())
+            return False
+
+        return True
 
     def mostrar_historia(self):
         import escena_historia

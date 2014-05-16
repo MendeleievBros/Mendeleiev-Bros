@@ -8,20 +8,28 @@ import random
 tecla = {pilas.simbolos.w: 'arriba'}
 
 
-class Iniciar:
+class Iniciar():
     "Representa un estado dentro del juego."
+
     def actualizar(self):
         self.contador_de_segundos += 1
         if self.contador_de_segundos > 2:
 
             self.texto.eliminar()
+            if self.estado == "ganando":
+                self.VolverMenu()
             return False
         return True
+
+    def VolverMenu(self):
+        import escena_menu
+        pilas.cambiar_escena(escena_menu.EscenaNiveles())
 
 
 class Iniciando(Iniciar):
     "Estado que indica que el juego ha comenzado."
     def __init__(self, nivel):
+        self.estado = "iniciando"
         self.nivel = nivel
         nivel = "Nivel" + str(nivel)
         self.texto = pilas.actores.Texto(nivel, 0, 200, magnitud=30,
@@ -37,6 +45,7 @@ class Iniciando(Iniciar):
 class Ganando(Iniciar):
     "Estado que indica que el juego ha comenzado."
     def __init__(self, nivel):
+        self.estado = "ganando"
         nivel = "Has completado el nivel" + str(nivel)
         self.texto = pilas.actores.Texto(nivel, 0, 200, magnitud=30,
             vertical=False, fuente="data/tipo_tabla.ttf", fijo=True)
@@ -148,7 +157,7 @@ class Juego(pilas.escena.Base):
         return False
 
     def ganar(self):
-        if  self.barra1.progreso == 100:
+        if  self.barra1.progreso == 10:
             self.barra1.progreso = 0
             pilas.escena_actual().tareas.eliminar_todas()
             self.grabartxt()
