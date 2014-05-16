@@ -157,7 +157,7 @@ class Juego(pilas.escena.Base):
         return False
 
     def ganar(self):
-        if  self.barra1.progreso == 10:
+        if  self.barra1.progreso == 100:
             self.barra1.progreso = 0
             pilas.escena_actual().tareas.eliminar_todas()
             self.grabartxt()
