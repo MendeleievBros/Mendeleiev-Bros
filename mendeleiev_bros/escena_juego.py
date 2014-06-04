@@ -35,8 +35,8 @@ class Iniciar():
         return True
 
     def VolverMenu(self):
-        import escena_menu
-        pilas.cambiar_escena(escena_menu.EscenaNiveles())
+        import escena_niveles
+        pilas.cambiar_escena(escena_niveles.EscenaNiveles())
 
 
 class Iniciando(Iniciar):
@@ -189,7 +189,7 @@ class Juego(pilas.escena.Base):
         return False
 
     def ganar(self):
-        if  self.barra1.progreso == 100:
+        if  self.barra1.progreso == 10:
             self.barra1.progreso = 0
             pilas.escena_actual().tareas.eliminar_todas()
             self.grabartxt()
