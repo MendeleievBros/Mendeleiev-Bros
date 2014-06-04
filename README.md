@@ -27,3 +27,5 @@ En el juego, hay dos barras que indican: La de arriba, el nivel de gasolina. La 
 ¿Como funciona el Jetpack?
 ===============
 Jacinto(el protagonista), va a todos lados en jetpack, y este consume H2. Durante el juego hay moleculas que debes recojer para no quedarte sin y morir. 
+
+

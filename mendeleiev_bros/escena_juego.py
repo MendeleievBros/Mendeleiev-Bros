@@ -4,6 +4,19 @@
 import pilas
 import random
 
+
+archi = open('datos.txt', 'r')
+nivel = archi.readline()
+pantalla = archi.readline()
+idioma = archi.readline()
+archi.close()
+
+if idioma == "ES":
+    from modulos.ES import *
+else:
+    from modulos.EN import *
+
+
 # Definimos la tecla que moverán al personaje
 tecla = {pilas.simbolos.w: 'arriba'}
 
@@ -16,7 +29,7 @@ class Iniciar():
         if self.contador_de_segundos > 2:
 
             self.texto.eliminar()
-            if self.estado == "ganando":
+            if self.estado1 == "ganando":
                 self.VolverMenu()
             return False
         return True
@@ -29,9 +42,9 @@ class Iniciar():
 class Iniciando(Iniciar):
     "Estado que indica que el juego ha comenzado."
     def __init__(self, nivel):
-        self.estado = "iniciando"
+        self.estado1 = "iniciando"
         self.nivel = nivel
-        nivel = "Nivel" + str(nivel)
+        nivel = juego_nivel + str(nivel)
         self.texto = pilas.actores.Texto(nivel, 0, 200, magnitud=30,
             vertical=False, fuente="data/tipo_tabla.ttf", fijo=True)
         self.texto.color = pilas.colores.negro
@@ -45,8 +58,23 @@ class Iniciando(Iniciar):
 class Ganando(Iniciar):
     "Estado que indica que el juego ha comenzado."
     def __init__(self, nivel):
-        self.estado = "ganando"
-        nivel = "Has completado el nivel" + str(nivel)
+        self.estado1 = "ganando"
+        nivel = juego_ganar + str(nivel)
+        self.texto = pilas.actores.Texto(nivel, 0, 200, magnitud=30,
+            vertical=False, fuente="data/tipo_tabla.ttf", fijo=True)
+        self.texto.color = pilas.colores.negro
+        self.texto.z = 5
+        self.texto.y = [-200]
+        self.contador_de_segundos = 0
+        # Cada un segundo le avisa al estado que cuente.
+        pilas.mundo.agregar_tarea(1, self.actualizar)
+
+
+class Perdiendo(Iniciar):
+    "Estado que indica que el juego ha comenzado."
+    def __init__(self, nivel):
+        self.estado1 = "ganando"
+        nivel = juego_perder
         self.texto = pilas.actores.Texto(nivel, 0, 200, magnitud=30,
             vertical=False, fuente="data/tipo_tabla.ttf", fijo=True)
         self.texto.color = pilas.colores.negro
@@ -91,9 +119,8 @@ class Juego(pilas.escena.Base):
         self.altura_diff = 80  # max 60 min 80
         self.altura = 62 + self.altura_diff  # altura de abertura// 62(jacinto)
         self.crear_pared()
-        pilas.mundo.agregar_tarea(0.01, self.act)
+        pilas.mundo.agregar_tarea(3, self.lets_go)
 
-        pilas.mundo.agregar_tarea(2.5, self.crear_pared)
         # Creamos un control personalizado con esas teclas
         self.mandos = pilas.control.Control(self, tecla)
         # creamos las barras, barra = h2, barra1 = puntos
@@ -106,9 +133,14 @@ class Juego(pilas.escena.Base):
             con_brillo=False)
         self.barra1.x = 200
         self.barra1.y = 170
-        pilas.mundo.agregar_tarea(6.5, self.crear_h2)
+
         pilas.mundo.colisiones.agregar(self.jacinto, self.MoleculasHidrogeno,
                                                     self.RellenarCombustible)
+
+    def lets_go(self):
+        pilas.mundo.agregar_tarea(0.01, self.act)
+        pilas.mundo.agregar_tarea(2.5, self.crear_pared)
+        pilas.mundo.agregar_tarea(6.5, self.crear_h2)
 
     def cambiar_estado(self, estado):
         self.estado = estado
@@ -236,7 +268,6 @@ class Juego(pilas.escena.Base):
 
     def final(self):
         # fin del juego, se elimina todo menos el fondo
-        pilas.avisar("Has perdido")
         pilas.escena_actual().tareas.eliminar_todas()
         self.barra.eliminar()
         self.barra1.eliminar()
@@ -247,3 +278,5 @@ class Juego(pilas.escena.Base):
             pared.eliminar()
         for molecula in self.MoleculasHidrogeno:
             molecula.eliminar()
+
+        self.cambiar_estado(Perdiendo(self.nivel))

@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
 import pilas
-MENSAJE_AYUDA = u"""
-    Para hacer que Jacinto suba tienes
-    que presionarla tecla w, y dejar de
-    presionarla para hacer que baje."""
+
+archi = open('datos.txt', 'r')
+nivel = archi.readline()
+pantalla = archi.readline()
+idioma = archi.readline()
+archi.close()
+
+if idioma == "ES":
+    from modulos.ES import *
+else:
+    from modulos.EN import *
 
 
 class Ayuda(pilas.escena.Base):
@@ -17,9 +24,9 @@ class Ayuda(pilas.escena.Base):
         self.pulsa_tecla_escape.conectar(self.cuando_pulsa_tecla)
 
     def crear_texto_ayuda(self):
-        texto = pilas.actores.Texto(MENSAJE_AYUDA, y=30)
+        texto = pilas.actores.Texto(ayuda_Principal, y=30)
         texto.definir_color(pilas.colores.negro)
-        pilas.avisar("Pulsa ESC para regresar")
+        pilas.avisar(ayuda_aviso)
 
     def cuando_pulsa_tecla(self, *k, **kw):
         import escena_menu
