@@ -42,6 +42,10 @@ class EscenaNiveles(pilas.escena.Base):
                     import escena_juego
                     pilas.cambiar_escena(escena_juego.Juego(elemento.nivel))
 
+    def cuando_vuelves(self):
+        import escena_menu
+        pilas.cambiar_escena(escena_menu.EscenaMenu())
+
     def iniciar(self):
         pilas.fondos.Fondo("data/guarida.jpg")
         pilas.eventos.click_de_mouse.conectar(self.nivel)
@@ -49,6 +53,11 @@ class EscenaNiveles(pilas.escena.Base):
         self.candado = []
         self.nivel_guardado = self.leertxt()
         self.mostrar_tabla()
+        self.volver = pilas.actores.Boton(ruta_normal='data/volver.png',
+             ruta_over='data/volver.png')
+        self.volver.x = 50
+        self.volver.y = -140
+        self.volver.conectar_presionado(self.cuando_vuelves)
 
     def candados(self):
 
