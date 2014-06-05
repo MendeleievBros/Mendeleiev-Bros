@@ -119,7 +119,13 @@ class Juego(pilas.escena.Base):
         self.altura_diff = 80  # max 60 min 80
         self.altura = 62 + self.altura_diff  # altura de abertura// 62(jacinto)
         self.crear_pared()
+
+        self.cont = pilas.actores.Texto("3", 264, -150, magnitud=50,
+            vertical=False, fuente="data/tipo_tabla.ttf", fijo=True)
+        self.cont.color = pilas.colores.negro
+
         pilas.mundo.agregar_tarea(3, self.lets_go)
+        pilas.mundo.agregar_tarea(1, self.contador)
 
         # Creamos un control personalizado con esas teclas
         self.mandos = pilas.control.Control(self, tecla)
@@ -136,6 +142,14 @@ class Juego(pilas.escena.Base):
 
         pilas.mundo.colisiones.agregar(self.jacinto, self.MoleculasHidrogeno,
                                                     self.RellenarCombustible)
+
+    def contador(self):
+        if self.cont.texto == "0":
+            self.cont.eliminar()
+            return False
+        else:
+            self.cont.texto = str(int(self.cont.texto) - 1)
+            return True
 
     def lets_go(self):
         pilas.mundo.agregar_tarea(0.01, self.act)
@@ -189,7 +203,7 @@ class Juego(pilas.escena.Base):
         return False
 
     def ganar(self):
-        if  self.barra1.progreso == 10:
+        if  self.barra1.progreso == 100:
             self.barra1.progreso = 0
             pilas.escena_actual().tareas.eliminar_todas()
             self.grabartxt()
