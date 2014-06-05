@@ -29,6 +29,7 @@ class EscenaMenu(pilas.escena.Base):
 
     def crear_el_menu_principal(self):
         opciones = [
+
         (menu1, self.comenzar_a_jugar),
         (menu2, self.mostrar_ayuda_del_juego),
         (menu3, self.mostrar_historia),
@@ -44,28 +45,41 @@ class EscenaMenu(pilas.escena.Base):
 
     def act(self):
         if self.menu.x == -500:
-            import escena_niveles
-            pilas.cambiar_escena(escena_niveles.EscenaNiveles())
-            return False
+            if self.donde == "jugar":
+                import escena_niveles
+                pilas.cambiar_escena(escena_niveles.EscenaNiveles())
+                return False
+            elif self.donde == "historia":
+                import escena_historia
+                pilas.cambiar_escena(escena_historia.Historia())
+            elif self.donde == "ayuda":
+                import escena_ayuda
+                pilas.cambiar_escena(escena_ayuda.Ayuda())
+            elif self.donde == "opciones":
+                import escena_opciones
+                pilas.cambiar_escena(escena_opciones.Opciones())
 
         return True
 
     def mostrar_historia(self):
-        import escena_historia
-        pilas.cambiar_escena(escena_historia.Historia())
-
-    def mostrar_opciones(self):
-        import escena_opciones
-        pilas.cambiar_escena(escena_opciones.Opciones())
-
-    def comenzar_a_jugar(self):
-
         self.menu.x = [-500]
         self.trans.x = [-500]
+        self.donde = "historia"
+
+    def mostrar_opciones(self):
+        self.menu.x = [-500]
+        self.trans.x = [-500]
+        self.donde = "opciones"
+
+    def comenzar_a_jugar(self):
+        self.menu.x = [-500]
+        self.trans.x = [-500]
+        self.donde = "jugar"
 
     def mostrar_ayuda_del_juego(self):
-        import escena_ayuda
-        pilas.cambiar_escena(escena_ayuda.Ayuda())
+        self.menu.x = [-500]
+        self.trans.x = [-500]
+        self.donde = "ayuda"
 
     def salir_del_juego(self):
         pilas.terminar()
