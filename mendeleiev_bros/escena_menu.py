@@ -26,6 +26,8 @@ class EscenaMenu(pilas.escena.Base):
         pilas.avisar(menu_aviso)
         self.crear_el_menu_principal()
         pilas.mundo.agregar_tarea(0.1, self.act)
+        self.sonido = pilas.sonidos.cargar("data/menu.ogg")
+        self.sonido.reproducir()
 
     def crear_el_menu_principal(self):
         opciones = [
@@ -47,7 +49,7 @@ class EscenaMenu(pilas.escena.Base):
         if self.menu.x == -500:
             if self.donde == "jugar":
                 import escena_niveles
-                pilas.cambiar_escena(escena_niveles.EscenaNiveles())
+                pilas.cambiar_escena(escena_niveles.EscenaNiveles(self.sonido))
                 return False
             elif self.donde == "historia":
                 import escena_historia

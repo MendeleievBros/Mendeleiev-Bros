@@ -24,8 +24,9 @@ class Elemento(pilas.actores.Texto):
 
 class EscenaNiveles(pilas.escena.Base):
     "Es la escena de presentación donde se elije el nivel."
-    def __init__(self):
+    def __init__(self, sonido):
         pilas.escena.Base.__init__(self)
+        self.sonido = sonido
 
     def leertxt(self):
         archi = open('datos.txt', 'r')
@@ -39,6 +40,7 @@ class EscenaNiveles(pilas.escena.Base):
             # Miro si el ratón entra en colisión con el área de la bandera
             if elemento.colisiona_con_un_punto(evento.x, evento.y):
                 if elemento.nivel <= int(self.nivel_guardado):
+                    self.sonido.detener()
                     import escena_juego
                     pilas.cambiar_escena(escena_juego.Juego(elemento.nivel))
 
