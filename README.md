@@ -10,6 +10,12 @@ Es un juego de plataformas, en el que tienes que esquivar las paredes que van ap
 ![enqueconsiste](imagenes/img1.png) 
 
 
+Requisitos
+===============
+Para poder ejecutar el juego, es necesario tener instalado Pilas(<a href="http://pilas-engine.com.ar/descargas.html">Descarga</a>)
+
+
+
 ¿Como se juega?
 ===============
 El manejo es muy simple. Con la tecla w se ascinede y cuando dejas de presionarla baja.
