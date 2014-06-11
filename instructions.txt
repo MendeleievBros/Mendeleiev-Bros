@@ -1,0 +1,10 @@
+--Installation--
+To play you need to download pilas.
+The game has to be unzipped in a folder and run "mendeleiev_bros.py".
+
+--Feedback--
+You can see our progress:
+twitter: https://twitter.com/Mendeleiev_Bros
+Github: https://github.com/MendeleievBros/Mendeleiev-Bros
+Blog: http://futurosprogramadores.tk
+

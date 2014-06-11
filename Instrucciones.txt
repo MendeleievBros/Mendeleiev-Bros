@@ -1,0 +1,10 @@
+--Instalación--
+Para poder jugar, es necesario tener instalado pilas.
+Descomprimir el juego en una carpeta, y ejecutar el archivo "mendeleiev_bros.py".
+
+--Contacto--
+Puede seguir nuestros avances en:
+twitter: https://twitter.com/Mendeleiev_Bros
+Github: https://github.com/MendeleievBros/Mendeleiev-Bros
+Blog: http://futurosprogramadores.tk
+

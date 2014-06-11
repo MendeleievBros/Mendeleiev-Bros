@@ -35,8 +35,9 @@ class Iniciar():
         return True
 
     def VolverMenu(self):
+        sonido = pilas.sonidos.cargar("data/menu.ogg")
         import escena_niveles
-        pilas.cambiar_escena(escena_niveles.EscenaNiveles())
+        pilas.cambiar_escena(escena_niveles.EscenaNiveles(sonido))
 
 
 class Iniciando(Iniciar):
@@ -97,6 +98,13 @@ class Jacinto(pilas.actores.Actor):
         self.imagen.definir_cuadro(indice)
 
 
+class Pared(pilas.actores.Actor):
+    "Un actor que se mueve con las teclas a, s y ESPACIO y con animación"
+    def __init__(self):
+        pilas.actores.Actor.__init__(self)
+        self.imagen = pilas.imagenes.cargar("data/pared.png")
+
+
 #Definimos la clase de nuestro juego
 class Juego(pilas.escena.Base):
 
@@ -105,7 +113,6 @@ class Juego(pilas.escena.Base):
         self.nivel = nivel
 
     def iniciar(self):
-
         self.cambiar_estado(Iniciando(self.nivel))
         pilas.fondos.Fondo('data/fondo2.jpg')
         self.paredes_arriba = []  # paredes a la derecha de jacinto y arriba
@@ -180,11 +187,13 @@ class Juego(pilas.escena.Base):
         return True
 
     def crear_pared(self):
-        pared = pilas.actores.Actor("data/pared.png")
-        pared1 = pilas.actores.Actor("data/pared.png")
+        pared = Pared()
+        pared1 = Pared()
         random1 = random.randrange(- 250 + self.altura, 250)
-        pared.abajo = random1
-        pared1.arriba = random1 - self.altura
+        pared.abajo = 250
+        pared.abajo = [random1]
+        pared1.arriba = -250
+        pared1.arriba = [random1 - self.altura]
         self.paredes_arriba.append(pared)
         self.paredes_abajo.append(pared1)
         return True
@@ -221,7 +230,7 @@ class Juego(pilas.escena.Base):
 
     def act(self):
         self.ganar()
-
+       # self.vibrar()
         self.colision()
         self.limpiar()
         if not self.SinCombustible:
