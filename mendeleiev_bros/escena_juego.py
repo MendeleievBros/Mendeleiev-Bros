@@ -37,7 +37,7 @@ class Iniciar():
     def VolverMenu(self):
         sonido = pilas.sonidos.cargar("data/menu.ogg")
         import escena_niveles
-        pilas.cambiar_escena(escena_niveles.EscenaNiveles(sonido))
+        pilas.cambiar_escena(escena_niveles.EscenaNiveles(sonido, True))
 
 
 class Iniciando(Iniciar):
