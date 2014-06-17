@@ -27,5 +27,5 @@ else:
 
 # Inicia la escena actual.
 import escena_menu
-pilas.cambiar_escena(escena_menu.EscenaMenu())
+pilas.cambiar_escena(escena_menu.EscenaMenu(True))
 pilas.ejecutar()

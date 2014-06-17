@@ -29,9 +29,11 @@ class Opciones(pilas.escena.Base):
     def cambiar(self, valor):
 
         if valor == "F":
+            pilas.atajos.modo_ventana()
             self.pantalla = valor + "\n"
             self.texto1.texto = opciones_pantallaF
         elif valor == "T":
+            pilas.atajos.modo_pantalla_completa()
             self.pantalla = valor + "\n"
             self.texto1.texto = opciones_pantallaT
 
@@ -47,6 +49,8 @@ class Opciones(pilas.escena.Base):
         archi = open('datos.txt', 'w')
         archi.write(str(self.nivel) + self.pantalla + self.idioma)
         archi.close()
+        import escena_menu
+        pilas.cambiar_escena(escena_menu.EscenaMenu())
 
     def opcion(self, evento):
         #Recorro la lista de banderas para ver si le he dado
@@ -57,14 +61,14 @@ class Opciones(pilas.escena.Base):
 
     def act(self):
 
-        if self.creditos.x == -200.0:
-            self.creditos.x = 205
-            self.creditos.x = [-200], 8
+        if self.creditos.x == -90.0:
+            self.creditos.x = 90
+            self.creditos.x = [-90], 8
         return True
 
     def iniciar(self):
         pilas.fondos.Fondo("data/guarida2.png")
-
+        pilas.actores.Sonido()
         archi = open('datos.txt', 'r')
         self.nivel = archi.readline()
         self.pantalla = archi.readline()
@@ -116,10 +120,11 @@ class Opciones(pilas.escena.Base):
         pilas.avisar(opciones_aviso)
 
     def scroll(self):
-        self.creditos = pilas.actores.Texto("Fernando Mola", magnitud=15,
-             x=205, y=-188)
+        self.creditos = pilas.actores.Texto(
+                    u"Creadores: César Blanco y Víctor Abadía", magnitud=15,
+             x=90, y=-188)
         self.creditos.definir_color(pilas.colores.negro)
-        self.creditos.x = [-200], 8
+        self.creditos.x = [-90], 8
 
     def cuando_pulsa_tecla(self, *k, **kw):
         import escena_menu

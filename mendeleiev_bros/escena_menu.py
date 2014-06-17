@@ -16,8 +16,9 @@ else:
 class EscenaMenu(pilas.escena.Base):
     "Es la escena de presentación donde se elijen las opciones del juego."
 
-    def __init__(self):
+    def __init__(self, musica=False):
         pilas.escena.Base.__init__(self)
+        self.musica = musica
 
     def iniciar(self):
 
@@ -26,8 +27,9 @@ class EscenaMenu(pilas.escena.Base):
         pilas.avisar(menu_aviso)
         self.crear_el_menu_principal()
         pilas.mundo.agregar_tarea(0.1, self.act)
+
         self.sonido = pilas.sonidos.cargar("data/menu.ogg")
-        self.sonido.reproducir()
+        self.sonido.reproducir(repetir=True)
 
     def crear_el_menu_principal(self):
         opciones = [
@@ -48,16 +50,20 @@ class EscenaMenu(pilas.escena.Base):
     def act(self):
         if self.menu.x == -500:
             if self.donde == "jugar":
+                self.sonido.detener()
                 import escena_niveles
-                pilas.cambiar_escena(escena_niveles.EscenaNiveles(self.sonido))
+                pilas.cambiar_escena(escena_niveles.EscenaNiveles())
                 return False
             elif self.donde == "historia":
+                self.sonido.detener()
                 import escena_historia
                 pilas.cambiar_escena(escena_historia.Historia())
             elif self.donde == "ayuda":
+                self.sonido.detener()
                 import escena_ayuda
                 pilas.cambiar_escena(escena_ayuda.Ayuda())
             elif self.donde == "opciones":
+                self.sonido.detener()
                 import escena_opciones
                 pilas.cambiar_escena(escena_opciones.Opciones())
 
