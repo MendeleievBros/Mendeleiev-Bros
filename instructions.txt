@@ -8,3 +8,27 @@ twitter: https://twitter.com/Mendeleiev_Bros
 Github: https://github.com/MendeleievBros/Mendeleiev-Bros
 Blog: http://futurosprogramadores.tk
 
+
+--Author--
+ -Music:
+
+    Menu: 
+	El Consorcio-Suspiros de España
+    Game:
+	Immediate Music -Epic Music Mix III 
+ 
+ -Pictures:
+
+    Game's background:
+	Background1: http://antoniocuestacornejo.blogspot.com.es
+	Background2: http://chifudelosrios.blogspot.com.es
+    Menu:
+	Background: http://laarmeriadeldibujante.blogspot.com.es/
+	Candado: http://www.zasnet-aect.eu/
+    Others:
+	Jacinto: Creación propia
+	H2: Cración propia
+	Numbers: http://ciudaddebegastriprimerciclo.blogspot.com.es/
+	Walls: Creación propia
+	Board: Creación propia
+	Button back: http://www.guitarbassluthier.com/gibsonj45deluxe/

@@ -1,6 +1,6 @@
 --Instalación--
-Para poder jugar, es necesario tener instalado pilas.
-Descomprimir el juego en una carpeta, y ejecutar el archivo "mendeleiev_bros.py".
+Para poder jugar, es necesario tener instalado pilas(http://pilas-engine.com.ar/descargas.html) y python(https://www.python.org/download/).
+Descomprimir el juego en una carpeta, abrir el programa de pilas, y arrastrar el archivo "mendeleiev_bros.py".
 
 --Contacto--
 Puede seguir nuestros avances en:
@@ -8,3 +8,26 @@ twitter: https://twitter.com/Mendeleiev_Bros
 Github: https://github.com/MendeleievBros/Mendeleiev-Bros
 Blog: http://futurosprogramadores.tk
 
+--Contenido de terceros--
+ -Música:
+
+    Menú: 
+	El Consorcio-Suspiros de España
+    Juego:
+	Immediate Music -Epic Music Mix III 
+ 
+ -Imágenes:
+
+    Fondo de juego:
+	Fondo1: http://antoniocuestacornejo.blogspot.com.es
+	Fondo2: http://chifudelosrios.blogspot.com.es
+    Menú:
+	Fondo: http://laarmeriadeldibujante.blogspot.com.es/
+	Candado: http://www.zasnet-aect.eu/
+    Otros:
+	Jacinto: Creación propia
+	H2: Cración propia
+	Números: http://ciudaddebegastriprimerciclo.blogspot.com.es/
+	Paredes: Creación propia
+	Tabla: Creación propia
+	Boton volver: http://www.guitarbassluthier.com/gibsonj45deluxe/
